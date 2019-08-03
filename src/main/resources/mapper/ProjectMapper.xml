@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.choerodonstudyservice25328wangxiang.infra.mapper.ProjectMapper">
+    <!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！ -->
+    <resultMap id="BaseResultMap" type="com.wx.testsercice.infra.dto.ProjectDTO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="code" property="code" jdbcType="VARCHAR"/>
+        <id column="organizationId" property="organizationId" jdbcType="INTEGER"/>
+        <id column="imageUrl" property="imageUrl" jdbcType="VARCHAR"/>
+        <id column="enabled" property="enabled" jdbcType="TINYINT"/>
+        <id column="type" property="type" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="fulltextSearch" resultMap="BaseResultMap">
+        SELECT * FROM FD_PROJECT WHERE 1=1
+        <if test="projectSearchDTO.code!= null">
+            AND code =#{projectSearchDTO.code}
+        </if>
+        <if test="projectSearchDTO.organizationId != null">
+            AND organization_id = #{projectSearchDTO.organizationId}
+        </if>
+        <if test="projectSearchDTO.imageUrl != null">
+            AND imageUrl = #{projectSearchDTO.imageUrl}
+        </if>
+        <if test="projectSearchDTO.enabled != null">
+            AND enabled =#{projectSearchDTO.enabled}
+        </if>
+        <if test="projectSearchDTO.type != null">
+            AND type = #{projectSearchDTO.type}
+        </if>
+        order by id desc
+    </select>
+</mapper>
